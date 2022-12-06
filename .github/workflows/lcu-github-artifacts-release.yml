@@ -2,16 +2,16 @@ name: goodboybot
 
 on:
   push:
-    branches: [zim-bot-inc]
+    branches: [goodboybot-inc]
   pull_request:
-    branches: [zim-bot-inc]
+    branches: [goodboybot-inc]
 
 permissions: write-all
 
 env:
   CI: false
-  Branches: zim-bot-inc
-  MainBranch: zim-bot-inc
+  Branches: goodboybot-inc
+  MainBranch: goodboybot-inc
   NPMRegistry: https://registry.npmjs.org/
   InstallCommand: npm install
   BuildCommand: npm update 
