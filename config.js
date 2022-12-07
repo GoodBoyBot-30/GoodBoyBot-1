@@ -75,7 +75,7 @@ global.prefa = ['','!','.','🐦','🐤','🗿']
 global.sp = '⭔'
 global.mess = {
     success: '*success prosessing*',
-        ban: '*Maaf, sepertinya kamu kena banned😔😔 ketik .owner Untuk meminta unban oke*',
+    ban: '*Maaf, sepertinya kamu kena banned😔😔 ketik .owner Untuk meminta unban oke*',
     horny: '*nsfw dinonaktifkan, harap minta pemilik untuk mengaktifkannya*',
     admin: '*perintah ini hanya untuk admin, aku bisa merasakanmu tapi maaf oke*',
     botAdmin: '*dengan hormat dapatkah Anda memberikan admin bot*',
