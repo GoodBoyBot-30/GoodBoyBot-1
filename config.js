@@ -1,8 +1,11 @@
 
 // ⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈⧈
-//▮ZIM BOT INC 2022 ®️ALL RIGHTS RESERVED
+//▮GOOD BOY BOTZ 2022 ®️ALL RIGHTS RESERVED
 //▮
 //▮FORK AND DON'T FORGET TO GIVE A STAR
+//▮
+//▮ jangan di hapus ini thanks too
+//▮THANK TO FORR :::
 //▮
 //▮THIS SOFTWARE IS UNDER UZ COPYRIGHT
 //▮
@@ -37,14 +40,14 @@ global.APIKeys = {
 }
 
 // Other
-global.owner = ['27634090203','']
-global.premium = ['27634090203','918188019676']
-global.botname = 'ZIM BOT INC'
+global.owner = ['6283152864289','']
+global.premium = ['6283152864289','62895368426077']
+global.botname = 'GOOD BOY BOTZ'
 global.ownername = 'DRIPS'
-global.group1 = 'https://chat.whatsapp.com/EFsb8RCXV4jLEFk4eAcA1A'
-global.group2 = 'https://chat.whatsapp.com/HSfcYU13g5C8GxINWwSWoA'
-global.packname = 'ZIM BOT INC'
-global.ytchannel = 'https://youtu.be/ww4z2m3uORU'
+global.group1 = 'htthttps://chat.whatsapp.com/ExRFJcnR3zV0wC62w9ZIga1A'
+global.group2 = 'https://chat.whatsapp.com/ExRFJcnR3zV0wC62w9ZIga'
+global.packname = 'GOOD BOY BOTZ'
+global.ytchannel = 'https://www.youtube.com/@GoodBoyBot'
 global.monayawal = '100000'
 global.darahawal = '100'
 global.besiAwal = '15'
@@ -71,17 +74,17 @@ global.sessionName = 'session'
 global.prefa = ['','!','.','🐦','🐤','🗿']
 global.sp = '⭔'
 global.mess = {
-    success: '*success whoa*',
-        ban: '*Sorry, looks like u got banned😔😔 type .owner To request unban okay*',
-    horny: '*nsfw is disabled please ask owner to enable it*',
-    admin: '*this cmd is for admin only , l can feel you but sorry okay*',
-    botAdmin: '*with due respect can you please give bot adminship*',
-    owner: '*this cmd is for bot owner only , l can feel you but sorry okay*',
-    group: '*this feature is only for groups okay*',
-    private: '*this feature can only used in dm okay*',
-    bot: '*Special Features for User Bot Number okay*',
-    wait: '*whoa wait zim bot processing okay*',
-    endLimit: '*Brothers Daily Limit Has Expired, Type .buy limit amount limit to buy limit, Note: Limit will be reset every 12 hours*',
+    success: '*success prosessing*',
+        ban: '*Maaf, sepertinya kamu kena banned😔😔 ketik .owner Untuk meminta unban oke*',
+    horny: '*nsfw dinonaktifkan, harap minta pemilik untuk mengaktifkannya*',
+    admin: '*perintah ini hanya untuk admin, aku bisa merasakanmu tapi maaf oke*',
+    botAdmin: '*dengan hormat dapatkah Anda memberikan admin bot*',
+    owner: '*perintah ini hanya untuk pemilik bot, saya bisa merasakannya tapi maaf oke*',
+    group: '*fitur ini hanyabisa di gunakan untuk grup okay*',
+    private: '*jika ingin menggunakan fitur ini chat saya oke*',
+    bot: '*Fitur Khusus untuk Nomor Bot Pengguna oke*',
+    wait: '*sabar say lagi di prosess oke*',
+    endLimit: '*Limit Harian Saudara Sudah Kedaluwarsa, Ketik .buy limit jumlah limit beli limit, Catatan: Limit akan direset setiap 12 jam*',
 }
 global.limitawal = {
     premium: "Infinity",
