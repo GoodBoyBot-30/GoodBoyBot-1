@@ -22,7 +22,7 @@
 //┗━━━━━━━━━━━━━━━━━━━━━━━━━
 //
 require('./config')
-const { default: ZimBotIncConnect, useSingleFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require("@adiwajshing/baileys")
+const { default: GoodBoyBotConnect, useSingleFileAuthState, DisconnectReason, fetchLatestBaileysVersion, generateForwardMessageContent, prepareWAMessageMedia, generateWAMessageFromContent, generateMessageID, downloadContentFromMessage, makeInMemoryStore, jidDecode, proto } = require("@adiwajshing/baileys")
 const { state, saveState } = useSingleFileAuthState(`./${sessionName}.json`)
 const pino = require('pino')
 const { Boom } = require('@hapi/boom')
@@ -73,38 +73,38 @@ if (global.db) setInterval(async () => {
     if (global.db.data) await global.db.write()
   }, 30 * 1000)
 
-async function startZimBotInc() {
-    const ZimBotInc = ZimBotIncConnect({
+async function startGoodBoyBot() {
+    const GoodBoyBot = GoodBoyBotConnect({
         logger: pino({ level: 'silent' }),
         printQRInTerminal: true,
         browser: ['ZIM BOT INC','Safari','1.0.0'],
         auth: state
     })
 
-    store.bind(ZimBotInc.ev)
+    store.bind(Good Boy Bot.ev)
     
     // anticall auto block
-    ZimBotInc.ws.on('CB:call', async (json) => {
+    Good Boy Bot.ws.on('CB:call', async (json) => {
     const callerId = json.content[0].attrs['call-creator']
     if (json.content[0].tag == 'offer') {
-    let pa7rick = await ZimBotInc.sendContact(callerId, global.owner)
-    ZimBotInc.sendMessage(callerId, { text: `*Automatic system block!*\n*Don't call bot!\nPlease contact the owner to UNBLOCK!*`}, { quoted : pa7rick })
+    let pa7rick = await Good Boy Bot.sendContact(callerId, global.owner)
+    Good Boy Bot.sendMessage(callerId, { text: `*Automatic system block!*\n*Don't call bot!\nPlease contact the owner to UNBLOCK!*`}, { quoted : pa7rick })
     await sleep(8000)
-    await ZimBotInc.updateBlockStatus(callerId, "block")
+    await Good Boy Bot.updateBlockStatus(callerId, "block")
     }
     })
 
-    ZimBotInc.ev.on('messages.upsert', async chatUpdate => {
+    GoodBoyBot.ev.on('messages.upsert', async chatUpdate => {
         //console.log(JSON.stringify(chatUpdate, undefined, 2))
         try {
         mek = chatUpdate.messages[0]
         if (!mek.message) return
         mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
         if (mek.key && mek.key.remoteJid === 'status@broadcast') return
-        if (!ZimBotInc.public && !mek.key.fromMe && chatUpdate.type === 'notify') return
+        if (!GoodBoyBot.public && !mek.key.fromMe && chatUpdate.type === 'notify') return
         if (mek.key.id.startsWith('BAE5') && mek.key.id.length === 16) return
-        m = smsg(ZimBotInc, mek, store)
-        require("./zimbot.js")(ZimBotInc, m, chatUpdate, store)
+        m = smsg(Good Boy Bot, mek, store)
+        require("./zimbot.js")(Good Boy Bot, m, chatUpdate, store)
         } catch (err) {
             console.log(err)
         }
@@ -121,22 +121,22 @@ let doku = [f1,f2,f3,f4,f5,f6]
 let feler = pickRandom(doku)
 // yoi
 
-    ZimBotInc.ev.on('group-participants.update', async (anu) => {
+    Good Boy Bot.ev.on('group-participants.update', async (anu) => {
         console.log(anu)
         try {
-            let metadata = await ZimBotInc.groupMetadata(anu.id)
+            let metadata = await GoodBoyBot.groupMetadata(anu.id)
             let participants = anu.participants
             for (let num of participants) {
                 // Get Profile Picture User
                 try {
-                    ppuser = await ZimBotInc.profilePictureUrl(num, 'image')
+                    ppuser = await Good Boy Bot.profilePictureUrl(num, 'image')
                 } catch {
                     ppuser = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
                 }
 
                 // Get Profile Picture Group
                 try {
-                    ppgroup = await ZimBotInc.profilePictureUrl(anu.id, 'image')
+                    ppgroup = await GoodBoy Bot.profilePictureUrl(anu.id, 'image')
                 } catch {
                     ppgroup = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
                 }
@@ -157,7 +157,7 @@ mentions: [num],
 fileName: `Welcome To ${metadata.subject}`,
 fileLength: 99999999999999,
 caption: he,
-footer: `©ZIM BOT INC 2022`,
+footer: `©Good Boy Bot 2022`,
 buttons: buttons,
 headerType: 4,
 contextInfo:{externalAdReply:{
@@ -185,7 +185,7 @@ mentions: [num],
 fileName: `He/She is gone bro ${metadata.subject}`,
 fileLength: 99999999999999,
 caption: he,
-footer: `©ZIM BOT INC 2022`,
+footer: `©Good Boy Bot 2022`,
 buttons: buttons,
 headerType: 4,
 contextInfo:{externalAdReply:{
@@ -197,7 +197,7 @@ sourceUrl: link,
 mediaUrl: link,
 }}
 }
-ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
+Good Boy Bot.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
                 }
             }
         } catch (err) {
@@ -206,7 +206,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
     })
 	
     // Setting
-    ZimBotInc.decodeJid = (jid) => {
+    Good Boy Bot.decodeJid = (jid) => {
         if (!jid) return jid
         if (/:\d+@/gi.test(jid)) {
             let decode = jidDecode(jid) || {}
@@ -214,44 +214,44 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
         } else return jid
     }
     
-    ZimBotInc.ev.on('contacts.update', update => {
+    Good Boy Bot.ev.on('contacts.update', update => {
         for (let contact of update) {
-            let id = ZimBotInc.decodeJid(contact.id)
+            let id = Good Boy Bot.decodeJid(contact.id)
             if (store && store.contacts) store.contacts[id] = { id, name: contact.notify }
         }
     })
 
-    ZimBotInc.getName = (jid, withoutContact  = false) => {
-        id = ZimBotInc.decodeJid(jid)
-        withoutContact = ZimBotInc.withoutContact || withoutContact 
+    Good Boy Bot.getName = (jid, withoutContact  = false) => {
+        id = Good Boy Bot.decodeJid(jid)
+        withoutContact = Good Boy Bot.withoutContact || withoutContact 
         let v
         if (id.endsWith("@g.us")) return new Promise(async (resolve) => {
             v = store.contacts[id] || {}
-            if (!(v.name || v.subject)) v = ZimBotInc.groupMetadata(id) || {}
+            if (!(v.name || v.subject)) v = Good Boy Bot.groupMetadata(id) || {}
             resolve(v.name || v.subject || PhoneNumber('+' + id.replace('@s.whatsapp.net', '')).getNumber('international'))
         })
         else v = id === '0@s.whatsapp.net' ? {
             id,
             name: 'WhatsApp'
-        } : id === ZimBotInc.decodeJid(ZimBotInc.user.id) ?
-            ZimBotInc.user :
+        } : id === Good Boy Bot.decodeJid(Good Boy Bot) ?
+            Good Boy Bot.user :
             (store.contacts[id] || {})
             return (withoutContact ? '' : v.name) || v.subject || v.verifiedName || PhoneNumber('+' + jid.replace('@s.whatsapp.net', '')).getNumber('international')
     }
     
-    ZimBotInc.sendContact = async (jid, kon, quoted = '', opts = {}) => {
+    Good Boy Bot.sendContact = async (jid, kon, quoted = '', opts = {}) => {
 	let list = []
 	for (let i of kon) {
 	    list.push({
-	    	displayName: await ZimBotInc.getName(i + '@s.whatsapp.net'),
-	    	vcard: `BEGIN:VCARD\nVERSION:3.0\nN:${await ZimBotInc.getName(i + '@s.whatsapp.net')}\nFN:${await ZimBotInc.getName(i + '@s.whatsapp.net')}\nitem1.TEL;waid=${i}:${i}\nitem1.X-ABLabel:DRIPS\nitem2.EMAIL;type=INTERNET:reinhardtuna@mail.uk\nitem2.X-ABLabel:Email\nitem3.URL:https://github.com/zimb-bot/\nitem3.X-ABLabel:Instagram\nitem4.ADR:;;ZIMBABWE;;;;\nitem4.X-ABLabel:Region\nEND:VCARD`
+	    	displayName: await Good Boy Bot.getName(i + '@s.whatsapp.net'),
+	    	vcard: `BEGIN:VCARD\nVERSION:3.0\nN:${await ZimBotInc.getName(i + '@s.whatsapp.net')}\nFN:${await Good Boy Bot.getName(i + '@s.whatsapp.net')}\nitem1.TEL;waid=${i}:${i}\nitem1.X-ABLabel:DRIPS\nitem2.EMAIL;type=INTERNET:reinhardtuna@mail.uk\nitem2.X-ABLabel:Email\nitem3.URL:https://github.com/zimb-bot/\nitem3.X-ABLabel:Instagram\nitem4.ADR:;;ZIMBABWE;;;;\nitem4.X-ABLabel:Region\nEND:VCARD`
 	    })
 	}
-	ZimBotInc.sendMessage(jid, { contacts: { displayName: `${list.length} Kontak`, contacts: list }, ...opts }, { quoted })
+	Good Boy Bot.sendMessage(jid, { contacts: { displayName: `${list.length} Kontak`, contacts: list }, ...opts }, { quoted })
     }
     
-    ZimBotInc.setStatus = (status) => {
-        ZimBotInc.query({
+    Good Boy Bot.setStatus = (status) => {
+        Good Boy Bot.query({
             tag: 'iq',
             attrs: {
                 to: '@s.whatsapp.net',
@@ -267,11 +267,11 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
         return status
     }
 	
-    ZimBotInc.public = true
+    Good Boy Bot.public = true
 
-    ZimBotInc.serializeM = (m) => smsg(ZimBotInc, m, store)
+    Good Boy Bot.serializeM = (m) => smsg(Good Boy Bot, m, store)
 
-    ZimBotInc.ev.on('connection.update', async (update) => {
+    Good Boy Bot.ev.on('connection.update', async (update) => {
         const { connection, lastDisconnect } = update	    
         if (connection === 'close') {
         let reason = new Boom(lastDisconnect?.error)?.output.statusCode
@@ -288,7 +288,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
         function _0x9d84(_0x222488,_0xc08992){var _0x571c41=_0x571c();return _0x9d84=function(_0x9d84fe,_0x259ad1){_0x9d84fe=_0x9d84fe-0x72;var _0x4e8e80=_0x571c41[_0x9d84fe];return _0x4e8e80;},_0x9d84(_0x222488,_0xc08992);}function _0x571c(){var _0x2f3835=['3306pJLxeL','6530xCguJO','209zmhIhq','6045970nBcuxk','102UfxOsv','ZIM\x20BOT\x20V3\x20CORDED\x20BY\x20DRIPS\x20THE\x20BOT\x20IS\x20CONNECTED\x20NOW\x20ENJOY\x20DONT\x20FORGET\x20TO\x20SUB\x20TO\x20MY\x20YT\x20CHANNEL','526MLKBVv','red','784oslxDo','8576xgSzVp','398760gxJiUV','4gopdTv','1204674uiPudO','18339633RBPDKV','9HiPGET'];_0x571c=function(){return _0x2f3835;};return _0x571c();}var _0x4c2a62=_0x9d84;(function(_0x567775,_0x4e3477){var _0x590f01=_0x9d84,_0x5a6d06=_0x567775();while(!![]){try{var _0x1a4984=parseInt(_0x590f01(0x7b))/0x1*(parseInt(_0x590f01(0x79))/0x2)+parseInt(_0x590f01(0x72))/0x3*(-parseInt(_0x590f01(0x80))/0x4)+-parseInt(_0x590f01(0x76))/0x5*(-parseInt(_0x590f01(0x75))/0x6)+parseInt(_0x590f01(0x7d))/0x7*(-parseInt(_0x590f01(0x7e))/0x8)+parseInt(_0x590f01(0x74))/0x9*(-parseInt(_0x590f01(0x78))/0xa)+-parseInt(_0x590f01(0x77))/0xb*(parseInt(_0x590f01(0x7f))/0xc)+parseInt(_0x590f01(0x73))/0xd;if(_0x1a4984===_0x4e3477)break;else _0x5a6d06['push'](_0x5a6d06['shift']());}catch(_0x3fa1ff){_0x5a6d06['push'](_0x5a6d06['shift']());}}}(_0x571c,0x618e0),console['log'](chalk[_0x4c2a62(0x7c)](_0x4c2a62(0x7a),update)));
     })
 
-    ZimBotInc.ev.on('creds.update', saveState)
+    Good Boy Bot.ev.on('creds.update', saveState)
     
     // Add Other
     /** Send List Messaage
@@ -301,7 +301,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
       *@param [*] sections
       *@param {*} quoted
       */
-        ZimBotInc.sendListMsg = (jid, text = '', footer = '', title = '' , butText = '', sects = [], quoted) => {
+        Good Boy Bot.sendListMsg = (jid, text = '', footer = '', title = '' , butText = '', sects = [], quoted) => {
         let sections = sects
         var listMes = {
         text: text,
@@ -310,7 +310,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
         buttonText: butText,
         sections
         }
-        ZimBotInc.sendMessage(jid, listMes, { quoted: quoted })
+        Good Boy Bot.sendMessage(jid, listMes, { quoted: quoted })
         }
 
     /** Send Button 5 Message
@@ -321,14 +321,14 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} button
      * @returns 
      */
-        ZimBotInc.send5ButMsg = (jid, text = '' , footer = '', but = []) =>{
+        Good Boy Bot.send5ButMsg = (jid, text = '' , footer = '', but = []) =>{
         let templateButtons = but
         var templateMessage = {
         text: text,
         footer: footer,
         templateButtons: templateButtons
         }
-        ZimBotInc.sendMessage(jid, templateMessage)
+        Good Boy Bot.sendMessage(jid, templateMessage)
         }
 
     /** Send Button 5 Image
@@ -341,8 +341,8 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} options
      * @returns
      */
-    ZimBotInc.send5ButImg = async (jid , text = '' , footer = '', img, but = [], options = {}) =>{
-        let message = await prepareWAMessageMedia({ image: img }, { upload: ZimBotInc.waUploadToServer })
+    Good Boy Bot.send5ButImg = async (jid , text = '' , footer = '', img, but = [], options = {}) =>{
+        let message = await prepareWAMessageMedia({ image: img }, { upload: Good Boy Bot.waUploadToServer })
         var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
         templateMessage: {
         hydratedTemplate: {
@@ -353,7 +353,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
             }
             }
             }), options)
-            ZimBotInc.relayMessage(jid, template.message, { messageId: template.key.id })
+            Good Boy Bot.relayMessage(jid, template.message, { messageId: template.key.id })
     }
 
     /** Send Button 5 Video
@@ -366,8 +366,8 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} options
      * @returns
      */
-    ZimBotInc.send5ButVid = async (jid , text = '' , footer = '', vid, but = [], options = {}) =>{
-        let message = await prepareWAMessageMedia({ video: vid }, { upload: ZimBotInc.waUploadToServer })
+    Good Boy Bot.send5ButVid = async (jid , text = '' , footer = '', vid, but = [], options = {}) =>{
+        let message = await prepareWAMessageMedia({ video: vid }, { upload: Good Boy Bot.waUploadToServer })
         var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
         templateMessage: {
         hydratedTemplate: {
@@ -378,7 +378,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
             }
             }
             }), options)
-            ZimBotInc.relayMessage(jid, template.message, { messageId: template.key.id })
+            Good Boy Bot.relayMessage(jid, template.message, { messageId: template.key.id })
     }
 
     /** Send Button 5 Gif
@@ -391,8 +391,8 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} options
      * @returns
      */
-    ZimBotInc.send5ButGif = async (jid , text = '' , footer = '', gif, but = [], options = {}) =>{
-        let message = await prepareWAMessageMedia({ video: gif, gifPlayback: true }, { upload: ZimBotInc.waUploadToServer })
+    Good Boy Bot.send5ButGif = async (jid , text = '' , footer = '', gif, but = [], options = {}) =>{
+        let message = await prepareWAMessageMedia({ video: gif, gifPlayback: true }, { upload: Good Boy Bot.waUploadToServer })
         var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
         templateMessage: {
         hydratedTemplate: {
@@ -403,7 +403,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
             }
             }
             }), options)
-            ZimBotInc.relayMessage(jid, template.message, { messageId: template.key.id })
+            Good Boy Bot.relayMessage(jid, template.message, { messageId: template.key.id })
     }
 
     /**
@@ -415,7 +415,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} quoted 
      * @param {*} options 
      */
-    ZimBotInc.sendButtonText = (jid, buttons = [], text, footer, quoted = '', options = {}) => {
+    Good Boy Bot.sendButtonText = (jid, buttons = [], text, footer, quoted = '', options = {}) => {
         let buttonMessage = {
             text,
             footer,
@@ -423,7 +423,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
             headerType: 2,
             ...options
         }
-        ZimBotInc.sendMessage(jid, buttonMessage, { quoted, ...options })
+        Good Boy Bot.sendMessage(jid, buttonMessage, { quoted, ...options })
     }
     
     /**
@@ -445,9 +445,9 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} options 
      * @returns 
      */
-    ZimBotInc.sendImage = async (jid, path, caption = '', quoted = '', options) => {
+    Good Boy Bot.sendImage = async (jid, path, caption = '', quoted = '', options) => {
 	let buffer = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
-        return await ZimBotInc.sendMessage(jid, { image: buffer, caption: caption, ...options }, { quoted })
+        return await Good Boy Bot.sendMessage(jid, { image: buffer, caption: caption, ...options }, { quoted })
     }
 
     /**
@@ -459,9 +459,9 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} options 
      * @returns 
      */
-    ZimBotInc.sendVideo = async (jid, path, caption = '', quoted = '', gif = false, options) => {
+    Good Boy Bot.sendVideo = async (jid, path, caption = '', quoted = '', gif = false, options) => {
         let buffer = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
-        return await ZimBotInc.sendMessage(jid, { video: buffer, caption: caption, gifPlayback: gif, ...options }, { quoted })
+        return await Good Boy Bot.sendMessage(jid, { video: buffer, caption: caption, gifPlayback: gif, ...options }, { quoted })
     }
 
     /**
@@ -473,9 +473,9 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} options 
      * @returns 
      */
-    ZimBotInc.sendAudio = async (jid, path, quoted = '', ptt = false, options) => {
+    Good Boy Bot.sendAudio = async (jid, path, quoted = '', ptt = false, options) => {
         let buffer = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
-        return await ZimBotInc.sendMessage(jid, { audio: buffer, ptt: ptt, ...options }, { quoted })
+        return await Good Boy Bot.sendMessage(jid, { audio: buffer, ptt: ptt, ...options }, { quoted })
     }
 
     /**
@@ -486,7 +486,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} options 
      * @returns 
      */
-    ZimBotInc.sendTextWithMentions = async (jid, text, quoted, options = {}) => ZimBotInc.sendMessage(jid, { text: text, contextInfo: { mentionedJid: [...text.matchAll(/@(\d{0,16})/g)].map(v => v[1] + '@s.whatsapp.net') }, ...options }, { quoted })
+   Good Boy Bot.sendTextWithMentions = async (jid, text, quoted, options = {}) => ZimBotInc.sendMessage(jid, { text: text, contextInfo: { mentionedJid: [...text.matchAll(/@(\d{0,16})/g)].map(v => v[1] + '@s.whatsapp.net') }, ...options }, { quoted })
 
     /**
      * 
@@ -496,7 +496,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} options 
      * @returns 
      */
-    ZimBotInc.sendImageAsSticker = async (jid, path, quoted, options = {}) => {
+    Good Boy Bot.sendImageAsSticker = async (jid, path, quoted, options = {}) => {
         let buff = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
         let buffer
         if (options && (options.packname || options.author)) {
@@ -505,7 +505,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
             buffer = await imageToWebp(buff)
         }
 
-        await ZimBotInc.sendMessage(jid, { sticker: { url: buffer }, ...options }, { quoted })
+        await Good Boy Bot.sendMessage(jid, { sticker: { url: buffer }, ...options }, { quoted })
         return buffer
     }
 
@@ -517,7 +517,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} options 
      * @returns 
      */
-    ZimBotInc.sendVideoAsSticker = async (jid, path, quoted, options = {}) => {
+    Good Boy Bot.sendVideoAsSticker = async (jid, path, quoted, options = {}) => {
         let buff = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split`,`[1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
         let buffer
         if (options && (options.packname || options.author)) {
@@ -526,7 +526,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
             buffer = await videoToWebp(buff)
         }
 
-        await ZimBotInc.sendMessage(jid, { sticker: { url: buffer }, ...options }, { quoted })
+        await Good Boy Bot.sendMessage(jid, { sticker: { url: buffer }, ...options }, { quoted })
         return buffer
     }
 	
@@ -537,7 +537,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} attachExtension 
      * @returns 
      */
-    ZimBotInc.downloadAndSaveMediaMessage = async (message, filename, attachExtension = true) => {
+    Good Boy Bot.downloadAndSaveMediaMessage = async (message, filename, attachExtension = true) => {
         let quoted = message.msg ? message.msg : message
         let mime = (message.msg || message).mimetype || ''
         let messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0]
@@ -553,7 +553,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
         return trueFileName
     }
 
-    ZimBotInc.downloadMediaMessage = async (message) => {
+    Good Boy Bot.downloadMediaMessage = async (message) => {
         let mime = (message.msg || message).mimetype || ''
         let messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0]
         const stream = await downloadContentFromMessage(message, messageType)
@@ -575,8 +575,8 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} options 
      * @returns 
      */
-    ZimBotInc.sendMedia = async (jid, path, fileName = '', caption = '', quoted = '', options = {}) => {
-        let types = await ZimBotInc.getFile(path, true)
+    Good Boy Bot.sendMedia = async (jid, path, fileName = '', caption = '', quoted = '', options = {}) => {
+        let types = await Good Boy Bot.getFile(path, true)
            let { mime, ext, res, data, filename } = types
            if (res && res.status !== 200 || file.length <= 65536) {
                try { throw { json: JSON.parse(file.toString()) } }
@@ -596,7 +596,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
        else if (/video/.test(mime)) type = 'video'
        else if (/audio/.test(mime)) type = 'audio'
        else type = 'document'
-       await ZimBotInc.sendMessage(jid, { [type]: { url: pathFile }, caption, mimetype, fileName, ...options }, { quoted, ...options })
+       await Good Boy Bot.sendMessage(jid, { [type]: { url: pathFile }, caption, mimetype, fileName, ...options }, { quoted, ...options })
        return fs.promises.unlink(pathFile)
        }
 
@@ -608,7 +608,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} options 
      * @returns 
      */
-    ZimBotInc.copyNForward = async (jid, message, forceForward = false, options = {}) => {
+    Good Boy Bot.copyNForward = async (jid, message, forceForward = false, options = {}) => {
         let vtype
 		if (options.readViewOnce) {
 			message.message = message.message && message.message.ephemeralMessage && message.message.ephemeralMessage.message ? message.message.ephemeralMessage.message : (message.message || undefined)
@@ -639,11 +639,11 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
                 }
             } : {})
         } : {})
-        await ZimBotInc.relayMessage(jid, waMessage.message, { messageId:  waMessage.key.id })
+        await Good Boy Bot.relayMessage(jid, waMessage.message, { messageId:  waMessage.key.id })
         return waMessage
     }
 
-    ZimBotInc.cMod = (jid, copy, text = '', sender = ZimBotInc.user.id, options = {}) => {
+    Good Boy Bot.cMod = (jid, copy, text = '', sender = Good Boy Bot.user.id, options = {}) => {
         //let copy = message.toJSON()
 		let mtype = Object.keys(copy.message)[0]
 		let isEphemeral = mtype === 'ephemeralMessage'
@@ -675,7 +675,7 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
      * @param {*} path 
      * @returns 
      */
-    ZimBotInc.getFile = async (PATH, save) => {
+    Good Boy Bot.getFile = async (PATH, save) => {
         let res
         let data = Buffer.isBuffer(PATH) ? PATH : /^data:.*?\/.*?;base64,/i.test(PATH) ? Buffer.from(PATH.split`,`[1], 'base64') : /^https?:\/\//.test(PATH) ? await (res = await getBuffer(PATH)) : fs.existsSync(PATH) ? (filename = PATH, fs.readFileSync(PATH)) : typeof PATH === 'string' ? PATH : Buffer.alloc(0)
         //if (!Buffer.isBuffer(data)) throw new TypeError('Result is not a buffer')
@@ -695,10 +695,10 @@ ZimBotInc.sendMessage(anu.id, buttonMessage, {quoted:fgclink})
 
     }
 
-    return ZimBotInc
+    return Good Boy Bot
 }
 
-startZimBotInc()
+startGood Boy Bot()
 
 
 let file = require.resolve(__filename)
